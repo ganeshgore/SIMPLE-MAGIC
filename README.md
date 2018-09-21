@@ -152,3 +152,19 @@ smagic python MagicPrinter.py --input MagicPrinterExample.smagic
 Open index.html file in borwser and use right and left arrow to navigate
 
 ![Alt text](images/example_code_view.png?raw=true "Title2") 
+
+
+## Creating smagic (dummy assembly) file from SMT file - **CompileToSmagic.py**
+
+This script accepts Z3 constraint file and outputs smagic file indicating computation in each clock 
+
+```ini
+smagic python CompileToSmagic.py --input < Input_SMT_Filename > --output < Output_smagic_filename >
+```
+
+**Example**
+```ini
+# Default input file : outputNorInv.v_python_Z3input.txt
+# Default output file : main.smagic
+smagic python CompileToSmagic.py
+```
