@@ -168,3 +168,17 @@ smagic python CompileToSmagic.py --input < Input_SMT_Filename > --output < Outpu
 # Default output file : main.smagic
 smagic python CompileToSmagic.py
 ```
+
+## Quick Run
+
+```ini
+docker pull goreganesh007/simple-magic
+dockerfiles\windowsSource.bat
+# Modify full_adder_1bit.v verilog file default module FullBitAddere
+smagic python simple_main.py
+smagic python CompileToSmagic.py
+smagic python MagicPrinter.py
+# Browse Index.html
+```
+
+
