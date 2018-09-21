@@ -93,9 +93,62 @@ source linuxSource.sh # for linux
 
 You can use shotcuts as - *smagic <command_to_run_>*  or *smagiccv <command_to_run_>* 
 
-For example:
+For example: 
+
+Note : No need to configure simple_conf.cfg default cconfiguration will work fine
 ```ini
 smagic python simple_main.py  # Will create final netlist file 
 
 smagiccv python convert_gates_2_array.py -f <SynthesizedNetlistName> # Will create OpenCV3 visualisation image 
 ```
+
+## Visualising crossbar computation using SVGs - **MagicPrinter.py**
+
+Basic idea is create SVG file of crossbar configuration for each clock, 
+and then use browser \( index.html \) to browse through each clock sequencially. 
+
+Input to the script is *.smagic file which lists all the dummy assembly instructions to run in cross bar. Specification of file is as follows 
+
+### **smagic file Specification**
+### **Directives**
+```ini
+.GRID <Rows> <Cols>
+```
+.GRID directive initiliases cross bar with defined rows and columns 
+
+### **Instructions**
+Each cell is defined as **R**<-RowNo->**C**<-CellNo->
+```ini
+#Instruction Template
+#<INPUT|OUTPUT> <CellName>
+#<NOT|NOR> <OUTPUTCell> <ListofInputCells>
+
+# Define Input in R1C1
+INPUT R1C1
+
+# Define OUTPUT in R1C4
+OUTPUT R1C4
+
+# R1C3 = Not R1C2
+NOT R1C3 R1C2
+
+# R1C3 = R1C2 NOR R1C1
+NOR R1C3 R1C2 R1C1
+
+#You can also write multiple instructions per row 
+#It represents Multiple computations in same clock cycle 
+NOR R1C3 R1C2 R1C1 | NOR R2C3 R2C2 R2C1 | ...
+
+# Optionally you can also mention tag for only output cell
+NOR R1C3(I1) R1C2 R1C1
+```
+
+To render example code, run following command 
+
+```ini
+smagic python MagicPrinter.py --input MagicPrinterExample.smagic
+```
+
+Open index.html file in borwser and use right and left arrow to navigate
+
+![Alt text](images/example_code_view.png?raw=true "Title2") 
