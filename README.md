@@ -61,3 +61,41 @@ In addition, two images will be created:
 - Clock cycle legend.
 
 ![Alt text](images/full_adder_1bit_nor2_Z3output_legend.png?raw=true "Title2") 
+
+
+## Executing using docker 
+
+Project consist of two docker Images
+
+* dockerfiles/DockerfileCV (name = simple-magic-cv) - with OpenCV3 (Required for OpenCV based visualisation Only)
+
+* dockerfiles/Dockerfile (name = simple-magic)  - Lightweight without OpenCV
+
+
+simple-magic-cv and simple-magic are derived from OpenCV3+Pytho2.7 and Ubuntu18:04 Images respectively. It has verified installation of ABC Synthesis Tool + Z3 Solver. Pull docker images using following commands.
+
+```ini
+docker pull goreganesh007/simple-magic-cv
+docker pull goreganesh007/simple-magic
+```
+
+**Note** : To modify docker image, refer Readme file in dockerfiles folder
+
+Once you download images execute following commands to create command shortcuts. It will create two shotcut commnad 
+* smagiccv - Execute commands in goreganesh007/simple-magic-cv
+* smagic - Execute commands in goreganesh007/simple-magic
+
+```ini
+#To create alias of docker command (smagic) Read comments in the file to learn more
+dockerfiles\windowsSource.bat # for windows 
+source linuxSource.sh # for linux
+```
+
+You can use shotcuts as - *smagic <command_to_run_>*  or *smagiccv <command_to_run_>* 
+
+For example:
+```ini
+smagic python simple_main.py  # Will create final netlist file 
+
+smagiccv python convert_gates_2_array.py -f <SynthesizedNetlistName> # Will create OpenCV3 visualisation image 
+```

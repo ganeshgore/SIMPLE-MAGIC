@@ -1,0 +1,1 @@
+docker build -t goreganesh/simple-magic-cv -f DockerfileCV .
