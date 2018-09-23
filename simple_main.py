@@ -11,12 +11,11 @@ parser.add_argument('--input', default="",
                     help='Z3 Contraints file')
 parser.add_argument('--config', default="simple_conf.cfg",
                     help='Configuration file for tools')
-parser.add_argument('--clean', default="False",
+parser.add_argument('--clean', default="",
                     help='To clean all temporary file')
 parser.add_argument('--output', default="main",
                     help='Output Filename (.smagic appended by default)')
 args = parser.parse_args()
-print args.clean, bool(args.clean)
 
 tempfile.tempdir = os.path.join(os.getcwd(), "tmp")
 if not os.path.isdir(tempfile.tempdir):
@@ -29,6 +28,8 @@ def main():
     config.readfp(open(args.config))
     input_path = config.get('input_output', 'input_path')
     input_path = args.input if len(args.input) else input_path
+    print "Reading File : ", input_path
+
     input_format = config.get('input_output', 'input_format')
     abc_dir_path = config.get('abc', 'abc_dir_path')
     Z3_path = config.get('Z3', 'Z3_path')
@@ -46,7 +47,7 @@ def main():
     abc_script = abc_script.replace('lib.genlib', 'mcnc1_nor2.genlib')
     abc_output_path = os.path.join(tempfile.tempdir, "outputNorInv.v")
     abc_script = abc_script.replace('output.v', abc_output_path)
-    print "abc_output_path - ", abc_output_path
+    print "abc_output_path : ", abc_output_path
 
     # Run abc script
     abc_script_path = os.path.join(tempfile.tempdir, "abc_script_path")
@@ -66,9 +67,10 @@ def main():
 
     # Clean files
     if bool(args.clean):
-        os.remove(abc_script_path)
-        os.remove(abc_output_path)
-        os.remove(Z3_input)
+        # Needs evaluation of what to remove
+        # os.remove(abc_script_path)
+        # os.remove(abc_output_path)
+        # os.remove(Z3_input)
         print "Cleaning temporary files"
 
 
